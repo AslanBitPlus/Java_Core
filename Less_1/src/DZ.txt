@@ -1,0 +1,159 @@
+1.
+Предположить, что числа в исходном массиве из 9 элементов имеют диапазон[0, 3],
+и представляют собой, например, состояния ячеек поля для игры в крестикинолики, 
+где 0 – это пустое поле, 1 – это поле с крестиком, 2 – это поле с ноликом, 
+3 – резервное значение. 
+Такое предположение позволит хранить в одном числе типа int всё поле 3х3. 
+Записать в файл 9 значений так, чтобы они заняли три байта. 
+
+2.
+Написать функцию, создающую резервную копию всех файлов в директории(без поддиректорий) 
+во вновь созданную папку ./backup
+
+(создаем два образа для заданий 1 и 2)
+
+$ docker images
+======================================
+
+======================================
+рис(0.png) 
+
+
+$ nano Dockerfile 
+Для ThreeByte =========================
+# Версия используемого OpenJDK
+FROM openjdk:11-jdk-slim
+
+# Рабочая папка
+WORKDIR /JavaApp
+
+# Копирование файлов в Контейнер
+COPY ThreeByte.java .
+
+# Компиляция  java приложения
+RUN javac ThreeByte.java
+
+# Запуск Java приложения
+CMD ["java", "ThreeByte"]
+======================================
+рис(1.png)
+
+$ docker build -t threebyte .
+======================================
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  9.728kB
+Step 1/5 : FROM openjdk:11-jdk-slim
+11-jdk-slim: Pulling from library/openjdk
+1efc276f4ff9: Already exists 
+a2f2f93da482: Already exists 
+12cca292b13c: Already exists 
+69e15dccd787: Already exists 
+Digest: sha256:868a4f2151d38ba6a09870cec584346a5edc8e9b71fde275eb2e0625273e2fd8
+Status: Downloaded newer image for openjdk:11-jdk-slim
+ ---> 8e687a82603f
+Step 2/5 : WORKDIR /JavaApp
+ ---> Running in 264bcf1dd18f
+Removing intermediate container 264bcf1dd18f
+ ---> eceb5603ab63
+Step 3/5 : COPY ThreeByte.java .
+ ---> ea0c37e6d3b1
+Step 4/5 : RUN javac ThreeByte.java
+ ---> Running in 3edf2a7e7fc7
+Removing intermediate container 3edf2a7e7fc7
+ ---> 1ec0cf2a4a6e
+Step 5/5 : CMD ["java", "ThreeByte"]
+ ---> Running in 8ccea0e79e69
+Removing intermediate container 8ccea0e79e69
+ ---> 9b9524f57bc1
+Successfully built 9b9524f57bc1
+Successfully tagged threebyte:latest
+======================================
+рис(2.png)
+
+$ docker run threebyte
+======================================
+Hello World!
+Массив чисел =====================
+[0, 1, 2, 3, 0, 1, 2, 3, 0]
+Запись в файл ThreeByte.txt
+Чтение из файла ThreeByte.txt
+[0, 1, 2, 3, 0, 1, 2, 3, 0]
+======================================
+рис(3.png)
+
+$ docker images
+======================================
+REPOSITORY   TAG           IMAGE ID       CREATED         SIZE
+threebyte    latest        9b9524f57bc1   4 minutes ago   424MB
+openjdk      11-jdk-slim   8e687a82603f   22 months ago   424MB
+======================================
+рис(4.png)
+
+
+Для BackUp ===========================
+# Версия используемого OpenJDK
+FROM openjdk:11-jdk-slim
+
+# Рабочая папка
+WORKDIR /JavaApp
+
+# Копирование файлов в Контейнер
+COPY BackUp.java .
+
+# Компиляция  java приложения
+RUN javac BackUp.java
+
+# Запуск Java приложения
+CMD ["java", "BackUp"]
+======================================
+рис(5.png)
+
+
+$ docker build -t backup .
+======================================
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  9.728kB
+Step 1/5 : FROM openjdk:11-jdk-slim
+ ---> 8e687a82603f
+Step 2/5 : WORKDIR /JavaApp
+ ---> Using cache
+ ---> eceb5603ab63
+Step 3/5 : COPY BackUp.java .
+ ---> 926e9cd30bb6
+Step 4/5 : RUN javac BackUp.java
+ ---> Running in 1e695a61d8ae
+Removing intermediate container 1e695a61d8ae
+ ---> e5e0e154b4b4
+Step 5/5 : CMD ["java", "BackUp"]
+ ---> Running in dfd56d6c564d
+Removing intermediate container dfd56d6c564d
+ ---> a3660b493169
+Successfully built a3660b493169
+Successfully tagged backup:latest
+======================================
+рис(6.png)
+
+$ docker run backup
+======================================
+./backup
+Копирование файлов ...
+./BackUp.class
+./BackUp.java
+======================================
+рис(7.png)
+
+$ docker images
+======================================
+REPOSITORY   TAG           IMAGE ID       CREATED          SIZE
+backup       latest        a3660b493169   2 minutes ago    424MB
+threebyte    latest        9b9524f57bc1   10 minutes ago   424MB
+openjdk      11-jdk-slim   8e687a82603f   22 months ago    424MB
+======================================
+рис(8.png)
+

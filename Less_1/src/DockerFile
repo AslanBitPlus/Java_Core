@@ -1,0 +1,20 @@
+# Версия используемого OpenJDK
+FROM openjdk:11-jdk-slim
+
+# Рабочая папка
+WORKDIR /JavaApp
+
+# Копирование файлов в Контейнер
+# COPY Backup.java .
+# COPY ThreeByte.java .
+COPY Main.java .
+
+# Компиляция  java приложения
+# RUN javac Backup.java
+# RUN javac ThreeByte.java
+RUN javac Main.java
+
+# Запуск Java приложения
+# CMD ["java", "Backup"]
+# CMD ["java", "ThreeByte"]
+CMD ["java", "Main"]
