@@ -1,0 +1,17 @@
+// Компиляция файла Mine в папку out
+javac -sourcepath ./src -d out src/main/java/org/example/Main.java
+// Запуск
+java -cp .\out\org\example\ BackUp
+
+// Компиляция файла BuckUp в папку out
+javac -sourcepath ./src -d out src/main/java/org/example/BackUp.java
+// Запуск
+java -cp .\out\org\example\ BackUp
+
+// Компиляция файла ThreeByte
+javac -sourcepath ./src -d out src/main/java/org/example/ThreeByte.java
+// Запуск
+java -cp .\out\org\example\ ThreeByte
+
+
+

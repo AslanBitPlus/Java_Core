@@ -1,0 +1,58 @@
+package org.example;
+
+import org.apache.commons.io.FileUtils;
+
+import java.io.*;
+import java.nio.file.*;
+
+public class BackUp {
+    public static void main(String[] args) throws IOException {
+        String folder = "./backup";
+
+        System.out.println("Резервная копия папки");
+        copyToBackup();
+    }
+
+    public static void copyToBackup() throws IOException {
+        // Определим каталог для копирования
+
+        Path wpath = Paths.get(System.getProperty("user.dir"));
+        System.out.println("Рабочая папка " + wpath);
+        Path npath = Paths.get(wpath + "\\backup");
+        System.out.println("Все файлы папки " + wpath +
+                " будут скопированы в паку " + npath);
+
+        try {
+            // Удаление папки, если существует
+            // File backup = new File(System.getProperty("user.dir") + "./backup");
+            File backup = new File(npath.toString());
+            System.out.println(backup);
+            if (!backup.exists()) {
+                FileUtils.deleteDirectory(backup);
+                System.out.println("Старый каталог " + backup + " Удален!");
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // Если каталог не существует, создаем его
+            // Files.createDirectory(Path.of("./backup"));
+            Files.createDirectory(npath);
+            System.out.println("Каталог " + npath + " создан!");
+        }
+
+        /*
+        DirectoryStream<Path> dir = Files.newDirectoryStream(Path.of("."));
+        for (Path file : dir) {
+            if (Files.isDirectory(file)) continue;
+            Files.copy(file, Path.of("./backup/" + file.toString()));
+            System.out.println("Копирование: " + file.toString());
+        }
+
+         */
+
+
+
+    }
+}
+
